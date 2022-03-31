@@ -59,12 +59,14 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message, data: data });
 });
 
+// 
+
 mongoose
   .connect(
-    ''
+    `${process.env.MONGO_URI}`
   )
   .then(result => {
-    const server = app.listen(8080);
+    const server = app.listen(process.env.PORT);
     const io = require('./socket').init(server);
     io.on('connection', socket => {
       console.log('Client connected');
